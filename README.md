@@ -177,8 +177,7 @@ LangGraph-MultiModal-Chatbot-Example/
 ├── pyproject.toml # 專案配置
 ├── requirements.txt # 依賴清單
 ├── .env.example # 環境變數範例
-├── run-reload.bat # Windows 快速啟動腳本
-├── demo.py # 使用範例
+├── run.bat # Windows 快速啟動腳本
 └── README.md # 專案說明
 ```
 
