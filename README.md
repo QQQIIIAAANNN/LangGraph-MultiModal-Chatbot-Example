@@ -5,6 +5,7 @@
 
 🔹English Description (for Beginners):
 This project is a beginner-friendly tutorial developed for a LangGraph workshop, aiming to help users understand the foundational architecture and workflow logic of multi-agent systems using LangGraph Studio.The system centers on an AI-powered chatbot for architectural concept generation, integrated with the Google Gemini API to perform text input, image generation, and knowledge retrieval tasks.It demonstrates how to implement dynamic task planning and execution management, making it an ideal entry-level example for design-oriented, AI-assisted collaborative workflows.
+If you need english version, please issues to me.
 
 ## 🎯 主要功能概述
 
@@ -133,7 +134,7 @@ source langgraph-env/bin/activate
 
 ```bash
 # 以開發模式安裝，讓本地變更即時生效
-pip install -e .
+pip install -r requirements.txt
 ```
 
 ### 4. 設定環境變數

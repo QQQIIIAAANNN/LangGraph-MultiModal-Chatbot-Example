@@ -132,8 +132,7 @@ def _process_image_input(image_input: Any) -> Optional[Dict[str, Any]]:
 def generate_gemini_image(
     prompt: str, 
     image_inputs: Optional[str] = None, 
-    i: int = 1, 
-    model_name: str = "gemini-2.0-flash-exp-image-generation"
+    i: int = 1
 ) -> Dict[str, Any]:
     """
     使用指定的 Gemini 模型，根據文字提示和可選的圖片輸入來生成或編輯圖片。
@@ -150,12 +149,12 @@ def generate_gemini_image(
     Args:
         prompt (str): 圖片生成/編輯的文字描述或指令。
         image_inputs (Optional[str]): 圖片輸入路徑（多個路徑用逗號分隔）。
-        model_name (str): 要使用的 Gemini 模型名稱。
         i (int): 要生成的圖片數量 (預設為 1)。
 
     Returns:
         Dict[str, Any]: 包含生成結果的字典。
     """
+    model_name = "gemini-2.0-flash-exp-image-generation"
     global client # Access the globally initialized client
     if client is None:
          return {"error": "Gemini Client 未成功初始化。"}

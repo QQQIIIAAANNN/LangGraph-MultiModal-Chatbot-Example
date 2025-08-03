@@ -26,71 +26,7 @@ def create_checkpointer():
     return InMemorySaver()
 
 #==================================
-# 長期記憶
-#==================================
-def create_store():
-    """創建長期記憶存儲"""
-    try:
-        gemini_key = os.getenv("GEMINI_API_KEY")
-        if gemini_key:
-            # 創建 Gemini 嵌入類別
-            class GeminiEmbeddings:
-                def __init__(self):
-                    import google.generativeai as genai
-                    genai.configure(api_key=gemini_key)
-                    self.model_name = "gemini-embedding-001"
-                
-                def embed_query(self, text: str) -> List[float]:
-                    """嵌入單個查詢文本"""
-                    import google.generativeai as genai
-                    try:
-                        result = genai.embed_content(
-                            model=self.model_name,
-                            content=text,
-                            output_dimensionality=768
-                        )
-                        return result['embedding']
-                    except Exception:
-                        return []
-                
-                def embed_documents(self, texts: List[str]) -> List[List[float]]:
-                    """嵌入多個文檔"""
-                    import google.generativeai as genai
-                    embeddings = []
-                    
-                    for text in texts:
-                        try:
-                            result = genai.embed_content(
-                                model=self.model_name,
-                                content=text,
-                                output_dimensionality=768
-                            )
-                            embeddings.append(result['embedding'])
-                        except Exception:
-                            embeddings.append([0.0] * 768)
-                    
-                    return embeddings
-            
-            # 創建 Gemini embeddings store
-            try:
-                embeddings = GeminiEmbeddings()
-                store = InMemoryStore(
-                    index={
-                        "embed": embeddings,
-                        "dims": 768,
-                    }
-                )
-                return store
-            except Exception:
-                return InMemoryStore()
-        
-        return InMemoryStore()
-        
-    except Exception:
-        return InMemoryStore()
-
-#==================================
-# 訊息管理
+# 短期記憶訊息管理
 #==================================
 def trim_message_history(messages: List[BaseMessage], max_tokens: int = 2000) -> List[BaseMessage]:
     """
@@ -216,7 +152,70 @@ def trim_message_history(messages: List[BaseMessage], max_tokens: int = 2000) ->
         return fallback_messages
 
 #==================================
-# 長期記憶操作
+# 長期記憶
+#==================================
+def create_store():
+    """創建長期記憶存儲"""
+    try:
+        gemini_key = os.getenv("GEMINI_API_KEY")
+        if gemini_key:
+            # 創建 Gemini 嵌入類別
+            class GeminiEmbeddings:
+                def __init__(self):
+                    import google.generativeai as genai
+                    genai.configure(api_key=gemini_key)
+                    self.model_name = "gemini-embedding-001"
+                
+                def embed_query(self, text: str) -> List[float]:
+                    """嵌入單個查詢文本"""
+                    import google.generativeai as genai
+                    try:
+                        result = genai.embed_content(
+                            model=self.model_name,
+                            content=text,
+                            output_dimensionality=768
+                        )
+                        return result['embedding']
+                    except Exception:
+                        return []
+                
+                def embed_documents(self, texts: List[str]) -> List[List[float]]:
+                    """嵌入多個文檔"""
+                    import google.generativeai as genai
+                    embeddings = []
+                    
+                    for text in texts:
+                        try:
+                            result = genai.embed_content(
+                                model=self.model_name,
+                                content=text,
+                                output_dimensionality=768
+                            )
+                            embeddings.append(result['embedding'])
+                        except Exception:
+                            embeddings.append([0.0] * 768)
+                    
+                    return embeddings
+            
+            # 創建 Gemini embeddings store
+            try:
+                embeddings = GeminiEmbeddings()
+                store = InMemoryStore(
+                    index={
+                        "embed": embeddings,
+                        "dims": 768,
+                    }
+                )
+                return store
+            except Exception:
+                return InMemoryStore()
+        
+        return InMemoryStore()
+        
+    except Exception:
+        return InMemoryStore()
+#==================================
+# 長期記憶操作及管理
 #==================================
 def save_to_long_term_memory(store: InMemoryStore, user_id: str, content: str, memory_type: str = "memory"):
     """保存內容到長期記憶"""
@@ -240,7 +239,7 @@ def save_to_long_term_memory(store: InMemoryStore, user_id: str, content: str, m
         pass
 
 def search_long_term_memory(store: InMemoryStore, user_id: str, query: str, limit: int = 3) -> str:
-    """搜尋長期記憶"""
+    """搜尋長期記憶(語義相似性搜尋)"""
     if not store:
         return ""
         
