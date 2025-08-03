@@ -165,8 +165,8 @@ langgraph dev --tunnel
 LangGraph-MultiModal-Chatbot-Example/
 ├── src/
 │ ├── init.py
-│ ├── state.py # 狀態管理（記憶模組）
-│ ├── configuration.py # 配置管理(建檔模組)
+│ ├── state.py # 狀態管理（記憶+感知模組）
+│ ├── configuration.py # 配置管理(建檔+規劃模組)
 │ ├── graph.py # 核心圖表邏輯（規劃+行動模組）
 │ ├── memory.py # 記憶系統實作（記憶模組）
 │ └── tools/ # 工具集（感知+行動模組）
