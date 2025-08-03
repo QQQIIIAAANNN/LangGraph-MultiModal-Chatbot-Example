@@ -165,14 +165,14 @@ LangGraph-MultiModal-Chatbot-Example/
 ├── src/
 │ ├── init.py
 │ ├── state.py # 狀態管理（記憶模組）
-│ ├── configuration.py # 配置管理
+│ ├── configuration.py # 配置管理(建檔模組)
 │ ├── graph.py # 核心圖表邏輯（規劃+行動模組）
-│ ├── memory.py # 記憶系統實作
+│ ├── memory.py # 記憶系統實作（記憶模組）
 │ └── tools/ # 工具集（感知+行動模組）
-│ ├── init.py
-│ ├── gemini_search_tool.py # 搜尋工具
-│ ├── gemini_image_generation_tool.py # 圖片生成
-│ └── multimodal_input_tool.py # 多模態分析（建檔+感知）
+│         ├── init.py
+│         ├── gemini_search_tool.py # 搜尋工具
+│         ├── gemini_image_generation_tool.py # 圖片生成
+│         └── multimodal_input_tool.py # 多模態分析（感知模組）
 ├── langgraph.json # LangGraph 配置
 ├── pyproject.toml # 專案配置
 ├── requirements.txt # 依賴清單
